@@ -208,52 +208,50 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Handle touch controls for mobile
+// Add this new touchstart event listener
 canvas.addEventListener('touchstart', function(e) {
+    if (isPaused) {
+        // Optionally, allow tapping to resume the game
+        return;
+    }
+
     const touch = e.changedTouches[0];
-    touchStartX = touch.screenX;
-    touchStartY = touch.screenY;
-}, false);
+    const rect = canvas.getBoundingClientRect();
 
-canvas.addEventListener('touchend', function(e) {
-    const touch = e.changedTouches[0];
-    touchEndX = touch.screenX;
-    touchEndY = touch.screenY;
+    // Calculate touch position relative to the canvas
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const touchX = (touch.clientX - rect.left) * scaleX;
+    const touchY = (touch.clientY - rect.top) * scaleY;
 
-    handleGesture();
-}, false);
-
-function handleGesture() {
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const deltaX = touchX - centerX;
+    const deltaY = touchY - centerY;
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Horizontal swipe
-        if (deltaX > 10) { // Right swipe
-            if (snake.dx === 0) {
-                snake.dx = grid;
-                snake.dy = 0;
-            }
-        } else if (deltaX < -10) { // Left swipe
-            if (snake.dx === 0) {
-                snake.dx = -grid;
-                snake.dy = 0;
-            }
+        // Horizontal tap
+        if (deltaX > 0 && snake.dx === 0) { // Right
+            snake.dx = speed;
+            snake.dy = 0;
+        } else if (deltaX < 0 && snake.dx === 0) { // Left
+            snake.dx = -speed;
+            snake.dy = 0;
         }
     } else {
-        // Vertical swipe
-        if (deltaY > 10) { // Down swipe
-            if (snake.dy === 0) {
-                snake.dy = grid;
-                snake.dx = 0;
-            }
-        } else if (deltaY < -10) { // Up swipe
-            if (snake.dy === 0) {
-                snake.dy = -grid;
-                snake.dx = 0;
-            }
+        // Vertical tap
+        if (deltaY > 0 && snake.dy === 0) { // Down
+            snake.dy = speed;
+            snake.dx = 0;
+        } else if (deltaY < 0 && snake.dy === 0) { // Up
+            snake.dy = -speed;
+            snake.dx = 0;
         }
     }
-}
+
+    e.preventDefault(); // Prevent default behavior like scrolling
+}, false);
+
 
 // Utility function to get random integer
 function getRandomInt(min, max) {
