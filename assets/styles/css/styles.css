@@ -7,7 +7,6 @@
 
 body {
   margin: 0;
-  background-color: #000;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -22,10 +21,8 @@ body {
 }
 
 canvas {
-  background-color: #111;
+  background-color: #8BC462;
   display: block;
-  -webkit-box-shadow: 0 0 20px #0f0;
-          box-shadow: 0 0 20px #0f0;
   width: 90vw;
   height: 90vw;
   max-width: 400px;
@@ -65,7 +62,7 @@ canvas {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #0f0;
+  background-color: #8BC462;
   border: none;
   color: #000;
   padding: 10px 20px;

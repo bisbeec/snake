@@ -280,10 +280,10 @@ function togglePauseOverlay() {
 function updatePauseButton() {
     if (isPaused) {
         pauseButton.textContent = 'Resume';
-        pauseButton.style.backgroundColor = '#f00'; // Change color to indicate resume
+        pauseButton.style.backgroundColor = '#8BC462'; // Change color to indicate resume
     } else {
         pauseButton.textContent = 'Pause';
-        pauseButton.style.backgroundColor = '#0f0'; // Change back to green
+        pauseButton.style.backgroundColor = '#8BC462'; // Change back to green
     }
 }
 
